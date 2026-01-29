@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>My First Site</title>
+</head>
+<body>
+  <h1>Hello Internet 🌍</h1>
+  <p>はじめて公開したサイトです。</p>
+  <p>今日の日付：<span id="date"></span></p>
+
+  <script>
+    document.getElementById("date").textContent = new Date().toLocaleDateString();
+  </script>
+</body>
+</html>
