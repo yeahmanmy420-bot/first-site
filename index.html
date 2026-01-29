@@ -3,77 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Counter App</title>
+  <title>My ToDo App</title>
   <style>
-    body{
+    body {
       font-family: system-ui, sans-serif;
-      text-align:center;
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#f5f5f5;
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
     }
-    .card{
-      background:white;
-      padding:28px;
-      border-radius:16px;
-      width:min(420px, 92vw);
+    .app {
+      background: white;
+      width: min(420px, 92vw);
+      padding: 24px;
+      border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
-    h1{ margin:0 0 10px; }
-    .count{
-      font-size:56px;
-      font-weight:700;
-      margin:14px 0 18px;
+    h1 {
+      margin-top: 0;
+      text-align: center;
     }
-    button{
-      padding:12px 18px;
-      font-size:16px;
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      margin:6px;
+    .input-area {
+      display: flex;
+      gap: 8px;
     }
-    .primary{ background:#111; color:white; }
-    .ghost{ background:#eaeaea; }
-    .hint{ color:#666; font-size:13px; margin-top:10px; }
+    input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 14px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 16px;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 4px;
+      border-bottom: 1px solid #eee;
+    }
+    .delete {
+      background: #eee;
+      border: none;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>カウンター</h1>
-    <div class="count" id="count">0</div>
+  <div class="app">
+    <h1>ToDo</h1>
 
-    <button class="primary" id="plus">+1</button>
-    <button class="ghost" id="reset">リセット</button>
+    <div class="input-area">
+      <input id="todoInput" placeholder="やることを書く" />
+      <button id="addBtn">追加</button>
+    </div>
 
-    <div class="hint">ボタンを押すたびに数字が増えるよ。</div>
+    <ul id="todoList"></ul>
   </div>
 
   <script>
-    let n = 0;
+    const input = document.getElementById("todoInput");
+    const addBtn = document.getElementById("addBtn");
+    const list = document.getElementById("todoList");
 
-    const countEl = document.getElementById("count");
-    const plusBtn = document.getElementById("plus");
-    const resetBtn = document.getElementById("reset");
+    addBtn.addEventListener("click", addTodo);
 
-    function render(){
-      countEl.textContent = n;
+    function addTodo() {
+      const text = input.value.trim();
+      if (text === "") return;
+
+      const li = document.createElement("li");
+      li.textContent = text;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "×";
+      delBtn.className = "delete";
+      delBtn.addEventListener("click", () => {
+        li.remove();
+      });
+
+      li.appendChild(delBtn);
+      list.appendChild(li);
+
+      input.value = "";
     }
-
-    plusBtn.addEventListener("click", () => {
-      n += 1;
-      render();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      n = 0;
-      render();
-    });
-
-    render();
   </script>
 </body>
 </html>
